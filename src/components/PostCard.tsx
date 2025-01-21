@@ -64,7 +64,7 @@ const PostCard = () => {
                 <img src="/post_img.jpg" alt="Post Image" className="w-full h-full object-cover rounded-md" />
             </div>
 
-            <HorizontalDivider />
+            <HorizontalDivider className="py-1 mt-5" />
             <ReactionSection />
         </div>
     )

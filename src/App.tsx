@@ -1,9 +1,10 @@
 import Post from "./components/Post"
 import LeftSideBar from "./components/sidebars/LeftSideBar"
+import RightSideBar from "./components/sidebars/RightSideBar"
 
 function App() {
   return (
-    <div className='flex flex-col px-36 w-full min-h-screen'>
+    <div className='flex flex-col p-36 w-full min-h-screen bg-slate-300'>
       <div className="w-full h-full bg-slate-300 px-6 py-4 flex flex-col">
         {/* Navbar Component */}
         {/* <Navbar /> */}
@@ -20,7 +21,7 @@ function App() {
 
             {/* Right section with 25% width */}
             <div className="w-[25%] p-4">
-              <h1>Right Section</h1>
+              <RightSideBar />
             </div>
           </div>
       </div>

@@ -1,7 +1,7 @@
 
-const HorizontalDivider = () => {
+const HorizontalDivider = ({className}: {className: string}) => {
   return (
-    <hr className="py-1 mt-5" />
+    <hr className={`${className}`} />
   )
 }
 
