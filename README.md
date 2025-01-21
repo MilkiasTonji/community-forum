@@ -1,4 +1,8 @@
 # React + TypeScript + Vite
+## How to run app locally:
+- clone the git repository
+- run `npm install` to install dependencies or packages
+- run `npm run dev` to start the local server
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
