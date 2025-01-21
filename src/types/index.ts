@@ -10,3 +10,10 @@ export interface Post {
     description: string;
     comments: Comment[];
 }
+
+export interface linkType {
+    id: number;
+    to: string;
+    name: string;
+    icon: any;
+}
