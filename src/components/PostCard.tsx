@@ -4,8 +4,6 @@ import { CiBookmark } from "react-icons/ci";
 import { IoMdShareAlt } from "react-icons/io";
 import HorizontalDivider from "./common/HorizontalDivider";
 
-
-
 const PosterCard = () => {
     return (
         <div className="flex items-center">

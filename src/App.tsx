@@ -3,11 +3,17 @@ import Post from "./components/Post"
 import LeftSideBar from "./components/sidebars/LeftSideBar"
 import RightSideBar from "./components/sidebars/RightSideBar"
 import { useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import DOMPurify from 'dompurify';
+
+
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 function App() {
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -58,25 +64,46 @@ function App() {
 
 
 const Modal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  
+  const [editorState, setEditorState] = useState<any>(EditorState.createEmpty())
+  const [htmlContent, setHtmlContent] = useState<string>('');
+
+  const onEditorStateChange = (editorState: EditorState) => {
+    setEditorState(editorState)
+    const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    setHtmlContent(html)
+   
+  }
+
+  const handlePost = () => {
+    console.log(htmlContent);
+  }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white w-[90%] max-w-lg rounded-lg shadow-lg p-6 relative">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Modal Title</h2>
-        <p className="text-gray-600 mb-6">This is the modal content. Add your form or any content here.</p>
+    <div className="fixed w-full inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white w-[100%] max-w-2xl rounded-lg shadow-lg p-6 relative">
+       <IoMdClose className="w-6 h-6 text-black cursor-pointer absolute right-5 top-3" onClick={onClose} />
+       <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Post</h2>
+
+       <div>
+        <Editor
+          editorState={editorState}
+          wrapperClassName="demo-wrapper border p-4"
+          editorClassName="demo-editor min-h-[200px] border border-gray-300 p-2 rounded"
+          onEditorStateChange={onEditorStateChange}
+        />
+
+        <div className="prose prose-lg max-w-none bg-gray-100 p-4 rounded border" 
+        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(htmlContent)}} />
+
+      </div>
         <div className="flex justify-end">
           <button
-            onClick={onClose}
-            className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-lg"
+            onClick={handlePost}
+            className="bg-[#3E5AF0] hover:bg-[#324eec] text-gray-200 font-bold py-2 px-4 rounded inline-flex items-center"
           >
-            Yes
-          </button>
-          <button
-            onClick={onClose}
-            className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-lg"
-          >
-            Close
+            Post
           </button>
         </div>
       </div>
