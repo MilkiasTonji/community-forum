@@ -1,6 +1,6 @@
 import { NavLink } from "react-router"
 import { linkType } from "../../types"
-import { FaHome } from "react-icons/fa"
+import { FaHome, FaUser } from "react-icons/fa"
 import { FaBookmark } from "react-icons/fa6"
 import { MdExplore } from "react-icons/md";
 
@@ -26,6 +26,13 @@ const LeftSideBar = () => {
             to: "/bookmarks",
             name: "Bookmarks",
             icon: <FaBookmark className="w-4 h-4" />
+
+        },
+        {
+            id: 4,
+            to: "/profile",
+            name: "Profile",
+            icon: <FaUser className="w-4 h-4" />
 
         }
     ]
