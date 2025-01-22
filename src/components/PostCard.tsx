@@ -1,14 +1,16 @@
 import { CiHeart } from "react-icons/ci";
-import { FaRegComment } from "react-icons/fa";
+import { FaBookmark, FaHeart, FaRegComment } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
 import { IoMdShareAlt } from "react-icons/io";
 import HorizontalDivider from "./common/HorizontalDivider";
-import {posts} from '../data/mockData';
 import { Post } from "../types";
+import { useEffect, useState } from "react";
+import Comment from "./Comment";
+import { posts as mockPosts } from "../data/mockData";
 
 
-const PosterCard = ({post}: {post: Post}) => {
-    const {user} = post
+const PosterCard = ({ post }: { post: Post }) => {
+    const { user } = post
     return (
         <div className="flex items-center">
             {/* circular icon or image */}
@@ -27,63 +29,111 @@ const PosterCard = ({post}: {post: Post}) => {
     )
 }
 
-const ReactionSection = ({post}: {post: Post}) => {
-    const {comments} = post
-    return (
-        <div className="flex items-center justify-between">
-            {/* likes, comments, and send section */}
-            <div className="flex gap-3 items-center">
-                {/* likes */}
-                <div className="flex px-2 items-center">
-                    <CiHeart className="w-5 h-5" />
-                    <span className="text-sm pl-1">{post.likes}</span>
-                </div>
-                {/* comments */}
-                <div className="flex px-2 items-center">
-                    <FaRegComment className="w-4 h-4" />
-                    <span className="text-sm pl-1">{comments.length}</span>
-                </div>
-            </div>
-            {/* Bookmark and Share section */}
+const ReactionSection = ({ post, bookMarkPost }: { post: Post,  bookMarkPost: (postId: number) => void }) => {
+    const { comments } = post
+    const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
+    const [likes, setLikes] = useState<number>(post.likes || 0);
+    const [isLiked, setIsLiked] = useState<boolean>(false);
 
-            <div className="flex items-center gap-3">
-                <IoMdShareAlt className="w-6 h-6" />
-                <CiBookmark className="w-5 h-5" />
+    
+    const toggleComment = () => {
+        setCommentsOpen(!commentsOpen)
+    }
+
+    const likePost = () => {
+        setIsLiked((prevIsLiked) => {
+            setLikes((prevLikes) => prevIsLiked ? prevLikes - 1 : prevLikes + 1);
+            return !prevIsLiked;
+        });
+    };
+
+
+    return (
+        <div className="w-full">
+            <div className="flex items-center justify-between">
+                {/* likes, comments, and send section */}
+                <div className="flex gap-3 items-center">
+                    {/* likes */}
+                    <div className="flex px-2 items-center cursor-pointer" onClick={likePost}>
+                        {isLiked ? <FaHeart className="w-5 h-5 text-red-500" /> : <CiHeart className="w-5 h-5" />}
+                        <span className="text-sm pl-1">{likes}</span>
+                    </div>
+                    {/* comments */}
+                    <div className="flex px-2 items-center cursor-pointer" onClick={toggleComment}>
+                        <FaRegComment className="w-4 h-4" />
+                        <span className="text-sm pl-1">{comments.length}</span>
+                    </div>
+                </div>
+                {/* Bookmark and Share section */}
+
+                <div className="flex items-center gap-3">
+                    <IoMdShareAlt className="w-6 h-6 cursor-pointer" />
+                    <div className="cursor-pointer" onClick={() => bookMarkPost(post.id)}>
+                        {
+                            post.bookmarked ? (<FaBookmark className="w-5 h-5 cursor-pointer text-red-500" />)
+                                : (<CiBookmark className="w-5 h-5 cursor-pointer" />)
+                        }
+                        {/* <span className="pl-2 text-sm">
+                            {bookmarkedPosts.some((bookMarkPost) => bookMarkPost.id === post.id) ? "Bookmarked" : "Bookmark"}
+                        </span> */}
+                    </div>
+
+                </div>
             </div>
+            {
+                commentsOpen &&
+                <div className="mt-4 ml-5 w-full">
+                    {comments.map((comment, index) => (
+                        <Comment uniqueKey={`${comment.id}-${index}`} comment={comment} key={`${comment.id}-${index}`} />
+                    ))}
+                </div>
+            }
         </div>
     )
 }
 
-const PostCard = () => {
+const PostCard = ({ posts: initialPosts }: { posts: Post[] }) => {
+    const [posts, setPosts] = useState<Post[]>(initialPosts);
+
+    const bookMarkPost = (postId: number) => {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.id === postId
+              ? { ...post, bookmarked: !post.bookmarked }
+              : post
+          )
+        );
+      };
+
     return (
         <>
-        {
-            posts && posts.map((post, index) => {
-                return (
-                    <div className="flex flex-col bg-white rounded-md p-5 gap-5 mb-5" key={index}>
-                    <PosterCard post={post} />
-                    <div className="py-5">
-                       {post.description}
-                    </div>
-        
-                    {
-                        index == 1 && 
-                        <div className="w-full h-80 rounded-md">
-                        <img src="/post_img.jpg" alt="Post Image" className="w-full h-full object-cover rounded-md" />
-                    </div>
-                    }
-        
-                    <HorizontalDivider className="py-1 mt-5" />
-                    <ReactionSection post={post} />
-                </div>
-                )
-            })
+            {
+                posts && posts.map((post, index) => {
+                    return (
+                        <div className="flex flex-col bg-white rounded-md p-5 gap-5 mb-5" key={index}>
+                            <PosterCard post={post} />
+                            <div className="py-5">
+                                {post.description}
+                            </div>
 
-        }
+                            {
+                                index == 1 &&
+                                <div className="w-full h-80 rounded-md">
+                                    <img src="/post_img.jpg" alt="Post Image" className="w-full h-full object-cover rounded-md" />
+                                </div>
+                            }
 
-        {
-            !posts && <div>No Posts</div>
-        }
+                            <HorizontalDivider className="py-1 mt-5" />
+                            <ReactionSection post={post}  bookMarkPost={bookMarkPost}/>
+                        </div>
+                    )
+                })
+
+            }
+
+            {
+                !posts || posts.length == 0 && <div>No Posts Yet</div>
+            }
         </>
     )
 }

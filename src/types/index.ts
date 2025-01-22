@@ -1,7 +1,7 @@
 export interface Comment {
     id: number;
     content: string;
-    username: string;
+    user: User;
     replies: Comment[]
 }
 
@@ -12,6 +12,7 @@ export interface Post {
     user: User;
     comments: Comment[];
     likes: number;
+    bookmarked: boolean,
 }
 
 export interface linkType {

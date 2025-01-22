@@ -1,9 +1,10 @@
 import PostCard from "./PostCard"
+import { posts } from '../data/mockData';
 
 const Post = () => {
   return (
     <div className="">
-        <PostCard />
+        <PostCard posts={posts} />
     </div>
   )
 }
