@@ -25,9 +25,9 @@ function CommonLayout({children}: {children: any}) {
   };
 
   return (
-    <div className='flex flex-col px-36 w-full min-h-screen bg-gray-100 relative'>
+    <div className='flex flex-col md:px-36 px-0 w-full min-h-screen bg-gray-100 relative'>
 
-      <div className="w-full h-full bg-gray-100 px-6 py-4 flex flex-col">
+      <div className="w-full h-full bg-gray-100 md:px-6 px-2 py-4 flex flex-col">
         {/* Navbar Component */}
         <Navbar />
         <div className="w-full flex items-end justify-end p-4">
@@ -41,16 +41,16 @@ function CommonLayout({children}: {children: any}) {
         {/* Create 3 sections for left(25%), center(50%), and right(25%) sections */}
         <div className="flex items-start flex-wrap">
           {/* left section with 25% width */}
-          <div className="w-[25%] p-4">
+          <div className="md:w-[25%] p-4 hidden md:block">
             <LeftSideBar />
           </div>
           {/* center section with 50% width */}
-          <div className="w-[50%] p-5">
+          <div className="w-full md:w-[50%] p-5">
             {children}
           </div>
 
           {/* Right section with 25% width */}
-          <div className="w-[25%] p-4">
+          <div className="md:w-[25%] p-4 hidden md:block">
             <RightSideBar />
           </div>
         </div>

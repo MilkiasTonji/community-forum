@@ -15,10 +15,11 @@ const Navbar: React.FC = () => {
         setIsModalOpen(false);
     };
     return (
-        <div className='flex items-center justify-between p-4 bg-white rounded-md'>
+        <div className='w-full flex items-center justify-between px-4 py-2 bg-white rounded-md'>
             {/* logo section */}
-            <div className=''>
-                Community Forum Logo
+            <div className='h-full'>
+                <h1 className='text-2xl font-bold leading-none'><span className='text-[#324eec]'>Community</span> <span className='text-orange-500'>Page</span></h1>
+                <span className='text-xs -mt-5 font-semibold font-serif'><span className='text-orange-600'>Level Up Your</span> <span className='text-[#324eec]'>Discussions</span></span>
             </div>
 
             {/* profile/auth section */}

@@ -96,7 +96,7 @@ const PostCard = ({ posts }: { posts: Post[] }) => {
             {
                 posts && posts.map((post, index) => {
                     return (
-                        <div className="flex flex-col bg-white rounded-md p-5 gap-5 mb-5" key={index}>
+                        <div className="flex flex-col bg-white md:rounded-md rounded-sm p-5 gap-5 mb-5" key={index}>
                             <PosterCard post={post} />
 
                             {/* sanitize the htmlContent to avoid potential XSS attacks */}
