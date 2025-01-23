@@ -6,12 +6,12 @@ import { IoMdClose } from "react-icons/io";
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import DOMPurify from 'dompurify';
 
 
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Navbar from "./components/Navbar";
-import { Outlet } from "react-router";
+import { useAuth } from "./hooks/useAuth";
+import { usePosts } from "./hooks/usePosts";
 
 function CommonLayout({children}: {children: any}) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -57,7 +57,7 @@ function CommonLayout({children}: {children: any}) {
       </div>
       {
         isModalOpen && (
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} setIsModalOpen={setIsModalOpen} />
         )
       }
     </div>
@@ -65,10 +65,14 @@ function CommonLayout({children}: {children: any}) {
 }
 
 
-const Modal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const Modal = ({ isOpen, onClose, setIsModalOpen }: { isOpen: boolean; onClose: () => void, setIsModalOpen: any }) => {
+
+ const {user} = useAuth();
+ const {addPost} = usePosts();
 
   const [editorState, setEditorState] = useState<any>(EditorState.createEmpty())
   const [htmlContent, setHtmlContent] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
 
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState)
@@ -78,7 +82,27 @@ const Modal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
   }
 
   const handlePost = () => {
-    console.log(htmlContent);
+    if (!title || !htmlContent){
+        return;
+    }
+    const newPost = {
+        id: Math.floor(100000 + Math.random() * 900000),
+        title,
+        description: htmlContent,
+        likes: 0,
+        bookmarked: false,
+        isLiked: false,
+        user: {
+            fullName: user? user.fullName: '',
+            userName: user? user.userName: ''
+        },
+        comments: []
+    }
+    addPost(newPost);
+    setTitle("");
+    setHtmlContent("");
+    setEditorState(EditorState.createEmpty());
+    setIsModalOpen(false);
   }
   if (!isOpen) return null;
 
@@ -88,19 +112,21 @@ const Modal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
         <IoMdClose className="w-6 h-6 text-black cursor-pointer absolute right-5 top-3" onClick={onClose} />
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Post</h2>
 
-        <div>
+        <div className="flex flex-col gap-3">
+        <div className="">
+            <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+            <input type="text" id="company" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+             placeholder="Title" required value={title} onChange={(e) => setTitle(e.target.value)} />
+        </div> 
           <Editor
             editorState={editorState}
-            wrapperClassName="demo-wrapper border p-4"
-            editorClassName="demo-editor min-h-[200px] border border-gray-300 p-2 rounded"
+            wrapperClassName="demo-wrapper border"
+            editorClassName="demo-editor min-h-[200px] border border-gray-300 px-2 py-1 rounded"
             onEditorStateChange={onEditorStateChange}
+            placeholder="Write Something..."
           />
-          {/* sanitize the htmlContent to avoid potential XSS attacks */}
-          <div className="prose prose-lg max-w-none bg-gray-100 p-4 rounded border"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlContent) }} />
-
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end my-3">
           <button
             onClick={handlePost}
             className="bg-[#3E5AF0] hover:bg-[#324eec] text-gray-200 font-bold py-2 px-4 rounded inline-flex items-center"

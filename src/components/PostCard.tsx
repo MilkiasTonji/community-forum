@@ -7,6 +7,8 @@ import { Post } from "../types";
 import { useState } from "react";
 import Comment from "./Comment";
 import { usePosts } from "../hooks/usePosts";
+import DOMPurify from 'dompurify';
+
 
 const PosterCard = ({ post }: { post: Post }) => {
     const { user } = post
@@ -28,10 +30,10 @@ const PosterCard = ({ post }: { post: Post }) => {
     )
 }
 
-const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post,  bookMarkPost: (postId: number) => void, toggleLikePost: (postId: number) => void }) => {
+const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post, bookMarkPost: (postId: number) => void, toggleLikePost: (postId: number) => void }) => {
     const { comments } = post
     const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
-    
+
     const toggleComment = () => {
         setCommentsOpen(!commentsOpen)
     }
@@ -82,7 +84,7 @@ const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post,  
 }
 
 const PostCard = ({ posts }: { posts: Post[] }) => {
-    const {toggleBookmark, toggleLikePost} = usePosts()
+    const { toggleBookmark, toggleLikePost } = usePosts()
 
     return (
         <>
@@ -91,19 +93,22 @@ const PostCard = ({ posts }: { posts: Post[] }) => {
                     return (
                         <div className="flex flex-col bg-white rounded-md p-5 gap-5 mb-5" key={index}>
                             <PosterCard post={post} />
-                            <div className="py-5">
-                                {post.description}
-                            </div>
+
+                            {/* sanitize the htmlContent to avoid potential XSS attacks */}
+                            <div
+                                className="py-5"
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+                            />
 
                             {
                                 index == 1 &&
-                                <div className="w-full h-80 rounded-md">
+                                <div className="w-full h-80 rounded-md mb-5">
                                     <img src="/post_img.jpg" alt="Post Image" className="w-full h-full object-cover rounded-md" />
                                 </div>
                             }
 
-                            <HorizontalDivider className="py-1 mt-5" />
-                            <ReactionSection post={post}  bookMarkPost={toggleBookmark} toggleLikePost ={toggleLikePost}/>
+                            <HorizontalDivider className="py-1 mt-0" />
+                            <ReactionSection post={post} bookMarkPost={toggleBookmark} toggleLikePost={toggleLikePost} />
                         </div>
                     )
                 })

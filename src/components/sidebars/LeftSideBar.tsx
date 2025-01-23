@@ -1,12 +1,15 @@
 import { NavLink } from "react-router"
 import { linkType } from "../../types"
-import { FaHome, FaUser } from "react-icons/fa"
+import { FaHome, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { FaBookmark } from "react-icons/fa6"
 import { MdExplore } from "react-icons/md";
+import { useAuth } from "../../hooks/useAuth";
 
 
 
 const LeftSideBar = () => {
+    const {user, logout} = useAuth();
+
     const links: linkType[] = [
         {
             id: 1,
@@ -54,6 +57,13 @@ const LeftSideBar = () => {
                         </div>
                     )
                 })
+            }
+            {
+                user && 
+                <button className="text-black p-2.5 rounded-md flex gap-2 items-center" onClick={logout}>
+                <span><FaSignOutAlt className="w-4 h-4" /> </span>
+                <span>Logout</span>
+            </button>
             }
         </div>
     )

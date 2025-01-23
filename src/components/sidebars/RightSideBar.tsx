@@ -1,9 +1,9 @@
 import { CiHeart } from "react-icons/ci"
 import HorizontalDivider from "../common/HorizontalDivider"
-import { posts } from "../../data/mockData"
+import { usePosts } from "../../hooks/usePosts";
 
 const RightSideBar = () => {
-
+    const {posts} = usePosts();
     // Aggregate likes for each user
     const userLikes = posts.reduce((acc, post) => {
         const userName = post.user.userName;
