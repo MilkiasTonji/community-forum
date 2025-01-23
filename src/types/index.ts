@@ -13,6 +13,7 @@ export interface Post {
     comments: Comment[];
     likes: number;
     bookmarked: boolean,
+    isLiked: boolean
 }
 
 export interface linkType {

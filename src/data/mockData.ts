@@ -12,6 +12,7 @@ export const posts: Post[] = [
       "I'm so glad to share with you guys some photos from my recent trip to the New-York. This city looks amazing, the buildings,nature,people all are beautiful. I highly recommend to visit this cool place! Also I would like to know what is your favorite place here or what you would like visit?",
     likes: 10,
     bookmarked: false,
+    isLiked: false,
     comments: [
       {
         id: 101,
@@ -43,6 +44,7 @@ export const posts: Post[] = [
     description: "Excited to join this platform!",
     likes: 8,
     bookmarked: false,
+    isLiked: false,
     comments: [
       {
         id: 101,
@@ -66,6 +68,7 @@ export const posts: Post[] = [
       "I am really excited to share you about my thoughts on current American Politics issues. I like what is happening anyways",
     likes: 5,
     bookmarked: false,
+    isLiked: false,
     comments: [
       {
         id: 101,
@@ -89,6 +92,7 @@ export const posts: Post[] = [
       "I am really excited to share you about my thoughts on current American Politics issues. I like what is happening anyways",
     likes: 3,
     bookmarked: false,
+    isLiked: false,
     comments: [
       {
         id: 101,

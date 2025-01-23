@@ -4,10 +4,9 @@ import { CiBookmark } from "react-icons/ci";
 import { IoMdShareAlt } from "react-icons/io";
 import HorizontalDivider from "./common/HorizontalDivider";
 import { Post } from "../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Comment from "./Comment";
-import { posts as mockPosts } from "../data/mockData";
-
+import { usePosts } from "../hooks/usePosts";
 
 const PosterCard = ({ post }: { post: Post }) => {
     const { user } = post
@@ -29,23 +28,13 @@ const PosterCard = ({ post }: { post: Post }) => {
     )
 }
 
-const ReactionSection = ({ post, bookMarkPost }: { post: Post,  bookMarkPost: (postId: number) => void }) => {
+const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post,  bookMarkPost: (postId: number) => void, toggleLikePost: (postId: number) => void }) => {
     const { comments } = post
     const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
-    const [likes, setLikes] = useState<number>(post.likes || 0);
-    const [isLiked, setIsLiked] = useState<boolean>(false);
-
     
     const toggleComment = () => {
         setCommentsOpen(!commentsOpen)
     }
-
-    const likePost = () => {
-        setIsLiked((prevIsLiked) => {
-            setLikes((prevLikes) => prevIsLiked ? prevLikes - 1 : prevLikes + 1);
-            return !prevIsLiked;
-        });
-    };
 
 
     return (
@@ -54,9 +43,9 @@ const ReactionSection = ({ post, bookMarkPost }: { post: Post,  bookMarkPost: (p
                 {/* likes, comments, and send section */}
                 <div className="flex gap-3 items-center">
                     {/* likes */}
-                    <div className="flex px-2 items-center cursor-pointer" onClick={likePost}>
-                        {isLiked ? <FaHeart className="w-5 h-5 text-red-500" /> : <CiHeart className="w-5 h-5" />}
-                        <span className="text-sm pl-1">{likes}</span>
+                    <div className="flex px-2 items-center cursor-pointer" onClick={() => toggleLikePost(post.id)}>
+                        {post.isLiked ? <FaHeart className="w-5 h-5 text-red-500" /> : <CiHeart className="w-5 h-5" />}
+                        <span className="text-sm pl-1">{post.likes || 0}</span>
                     </div>
                     {/* comments */}
                     <div className="flex px-2 items-center cursor-pointer" onClick={toggleComment}>
@@ -92,18 +81,8 @@ const ReactionSection = ({ post, bookMarkPost }: { post: Post,  bookMarkPost: (p
     )
 }
 
-const PostCard = ({ posts: initialPosts }: { posts: Post[] }) => {
-    const [posts, setPosts] = useState<Post[]>(initialPosts);
-
-    const bookMarkPost = (postId: number) => {
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post.id === postId
-              ? { ...post, bookmarked: !post.bookmarked }
-              : post
-          )
-        );
-      };
+const PostCard = ({ posts }: { posts: Post[] }) => {
+    const {toggleBookmark, toggleLikePost} = usePosts()
 
     return (
         <>
@@ -124,7 +103,7 @@ const PostCard = ({ posts: initialPosts }: { posts: Post[] }) => {
                             }
 
                             <HorizontalDivider className="py-1 mt-5" />
-                            <ReactionSection post={post}  bookMarkPost={bookMarkPost}/>
+                            <ReactionSection post={post}  bookMarkPost={toggleBookmark} toggleLikePost ={toggleLikePost}/>
                         </div>
                     )
                 })

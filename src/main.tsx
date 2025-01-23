@@ -6,9 +6,11 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import MyPosts from './components/MyPosts.tsx';
 import Bookmarks from './components/Bookmarks.tsx';
 import Profile from './components/Profile.tsx';
+import { PostsProvider } from './context/PostsContext.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
+  <PostsProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -17,5 +19,6 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/Profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
+  </PostsProvider>
 
 )

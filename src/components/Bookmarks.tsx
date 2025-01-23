@@ -1,16 +1,15 @@
-import { useState } from "react";
+
 import CommonLayout from "../CommonLayout"
 import { useAuth } from "../hooks/useAuth";
+import { usePosts } from "../hooks/usePosts";
 import PostCard from "./PostCard";
-import { Post } from "../types";
-import { posts } from "../data/mockData";
 
 const Bookmarks = () => {
   const { user } = useAuth();
-  const [bookmarkedPosts,] = useState<Post[]>(posts);
+  const {posts} = usePosts();
 
-  const _bookmarkedPosts = bookmarkedPosts.filter((post) => post.bookmarked);
-
+  // Filter bookmarked posts
+  const bookmarkedPosts = posts.filter((post) => post.bookmarked);
 
   return (
     <CommonLayout>
@@ -19,7 +18,7 @@ const Bookmarks = () => {
           !user && <div>You are not logged in</div>
         }
         {
-          user && <PostCard posts={_bookmarkedPosts} />
+          user && <PostCard posts={bookmarkedPosts} />
         }
       </div>
     </CommonLayout>
