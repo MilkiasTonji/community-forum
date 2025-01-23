@@ -2,7 +2,7 @@ export interface Comment {
     id: number;
     content: string;
     user: User;
-    replies: Comment[]
+    replies?: Reply[]
 }
 
 export interface Post {
@@ -28,3 +28,10 @@ export interface User {
     userName: string;
     password?: string;
 }
+
+export interface Reply {
+    id: number;
+    content: string;
+    user: User;
+    replies: Reply[]; // Replies of this reply
+  };

@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import MyPosts from './components/MyPosts.tsx';
 import Bookmarks from './components/Bookmarks.tsx';
 import Profile from './components/Profile.tsx';
-import { PostsProvider } from './context/PostsContext.tsx';
+import { PostsProvider } from './context/PostsProvider.tsx';
 
 
 createRoot(document.getElementById('root')!).render(

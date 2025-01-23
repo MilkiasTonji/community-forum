@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { PostsContext } from "../context/PostsContext";
+import { PostContext } from "../context/PostContext";
 
 export const usePosts = () => {
-    const context = useContext(PostsContext);
+    const context = useContext(PostContext);
     if (!context) {
       throw new Error('usePosts must be used within a PostsProvider');
     }

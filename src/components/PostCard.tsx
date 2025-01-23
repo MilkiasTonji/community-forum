@@ -8,6 +8,7 @@ import { useState } from "react";
 import Comment from "./Comment";
 import { usePosts } from "../hooks/usePosts";
 import DOMPurify from 'dompurify';
+import CommentInput from "./CommentInput";
 
 
 const PosterCard = ({ post }: { post: Post }) => {
@@ -33,6 +34,7 @@ const PosterCard = ({ post }: { post: Post }) => {
 const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post, bookMarkPost: (postId: number) => void, toggleLikePost: (postId: number) => void }) => {
     const { comments } = post
     const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
+    const {addComment}  = usePosts();
 
     const toggleComment = () => {
         setCommentsOpen(!commentsOpen)
@@ -73,9 +75,12 @@ const ReactionSection = ({ post, bookMarkPost, toggleLikePost }: { post: Post, b
             </div>
             {
                 commentsOpen &&
-                <div className="mt-4 ml-5 w-full">
+                <div className="mt-4 ml-5 w-full flex flex-col">
+                    <div className="my-2">
+                        <CommentInput postId={post.id} addComment={addComment}  />
+                    </div>
                     {comments.map((comment, index) => (
-                        <Comment uniqueKey={`${comment.id}-${index}`} comment={comment} key={`${comment.id}-${index}`} />
+                        <Comment uniqueKey={`${comment.id}-${index}`} comment={comment} key={`${comment.id}-${index}`} post={post} />
                     ))}
                 </div>
             }
@@ -87,7 +92,7 @@ const PostCard = ({ posts }: { posts: Post[] }) => {
     const { toggleBookmark, toggleLikePost } = usePosts()
 
     return (
-        <>
+        <div className="relative">
             {
                 posts && posts.map((post, index) => {
                     return (
@@ -118,7 +123,7 @@ const PostCard = ({ posts }: { posts: Post[] }) => {
             {
                 !posts || posts.length == 0 && <div>No Posts Yet</div>
             }
-        </>
+        </div>
     )
 }
 

@@ -20,17 +20,51 @@ export const posts: Post[] = [
           fullName: "Jack Smith",
           userName: "jack",
         },
-        content: "Great post, Ray!. I would like to visit New-York as well and you will guide me okay",
-        replies: [],
+        content:
+          "Great post, Ray!. I would like to visit New-York as well and you will guide me okay",
+        replies: [
+          {
+            id: 100,
+            user: {
+              fullName: "Mary Smith",
+              userName: "mary",
+            },
+            content:
+              "Great post, Ray!. I would like to visit New-York as well and you will guide me okay",
+            replies: [
+              {
+                id: 1050,
+                user: {
+                  fullName: "Test User",
+                  userName: "testUser",
+                },
+                content:
+                  "I like your post very much and I liked your reply as well.",
+                replies: [],
+              },
+            ],
+          },
+        ],
       },
       {
-        id: 101,
+        id: 102,
         user: {
           fullName: "Mary Smith",
           userName: "mary",
         },
         content: "Great post, Ray!. Let's do it together again",
-        replies: [],
+        replies: [
+          {
+            id: 100,
+            user: {
+              fullName: "Mary Smith",
+              userName: "mary",
+            },
+            content:
+              "Great post, Ray!. I would like to visit New-York as well and you will guide me okay",
+            replies: [],
+          },
+        ],
       },
     ],
   },
@@ -47,7 +81,7 @@ export const posts: Post[] = [
     isLiked: false,
     comments: [
       {
-        id: 101,
+        id: 103,
         user: {
           fullName: "Ray Hammond",
           userName: "ray",
@@ -71,7 +105,7 @@ export const posts: Post[] = [
     isLiked: false,
     comments: [
       {
-        id: 101,
+        id: 104,
         user: {
           fullName: "John Doe",
           userName: "joe",
@@ -95,7 +129,7 @@ export const posts: Post[] = [
     isLiked: false,
     comments: [
       {
-        id: 101,
+        id: 105,
         user: {
           fullName: "Mary Smith",
           userName: "mary",
