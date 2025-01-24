@@ -1,9 +1,19 @@
+import { useEffect } from "react";
 import CommonLayout from "../CommonLayout"
 import { useAuth } from "../hooks/useAuth"
 import HorizontalDivider from "./common/HorizontalDivider";
+import { useNavigate } from "react-router";
 
 const Profile = () => {
   const { user } = useAuth();
+  const router = useNavigate();
+
+    useEffect(()=> {
+      if(!user){
+        router("/");
+      }
+    },[])
+
   return (
     <CommonLayout>
       {
@@ -25,6 +35,9 @@ const Profile = () => {
           </div>
         </div>
       }
+         {
+          !user && <div>You are not logged in</div>
+        }
     </CommonLayout>
   )
 }

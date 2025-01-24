@@ -1,14 +1,14 @@
 import { NavLink } from "react-router"
 import { linkType } from "../../types"
-import { FaHome, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { FaHome, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { FaBookmark } from "react-icons/fa6"
 import { MdExplore } from "react-icons/md";
 import { useAuth } from "../../hooks/useAuth";
 
 
 
-const LeftSideBar = () => {
-    const {user, logout} = useAuth();
+const LeftSideBar = ({handleOpenModal}: {handleOpenModal: any}) => {
+    const { user, logout } = useAuth();
 
     const links: linkType[] = [
         {
@@ -47,24 +47,32 @@ const LeftSideBar = () => {
                 links.map((link: linkType, index: number) => {
                     return (
                         <div className="flex flex-col justify-center mt-3" key={`${link.id} - ${index}`}>
-                        <NavLink
-                            to={link.to}
-                            className={({ isActive }) =>  isActive ? "bg-gray-300 p-2.5 flex items-center gap-2 rounded-md text-black" : "text-black p-2.5 rounded-md flex gap-2 items-center"}
-                        >
-                            <span>{link.icon}</span>
-                            <span>{link.name}</span>
-                        </NavLink>
+                            <NavLink
+                                to={link.to}
+                                className={({ isActive }) => isActive ? "bg-gray-300 p-2.5 flex items-center gap-2 rounded-md text-black" : "text-black p-2.5 rounded-md flex gap-2 items-center"}
+                            >
+                                <span>{link.icon}</span>
+                                <span>{link.name}</span>
+                            </NavLink>
                         </div>
                     )
                 })
             }
             {
-                user && 
-                <button className="text-black p-2.5 rounded-md flex gap-2 items-center" onClick={logout}>
-                <span><FaSignOutAlt className="w-4 h-4" /> </span>
-                <span>Logout</span>
-            </button>
+                user ?
+                    <button className="text-black p-2.5 rounded-md flex gap-2 items-center" onClick={logout}>
+                        <span><FaSignOutAlt className="w-4 h-4" /> </span>
+                        <span>Logout</span>
+                    </button>
+                    :
+                    <button
+                        onClick={handleOpenModal}
+                        className="border-[1px] border-[#3E5AF0] hover:bg-white hover:border-[#324eec] text-black hover:text-black p-2.5 rounded inline-flex items-center">
+                        <FaSignInAlt className="w-4 h-4 " />
+                        <span className="font-bold px-2">Login</span>
+                    </button>
             }
+
         </div>
     )
 }

@@ -15,7 +15,7 @@ const Comment = ({ uniqueKey, comment, post }: { uniqueKey: string, comment: Com
     }
 
     return (
-        <div className='w-full flex flex-col mx-5'>
+        <div className='w-full flex flex-col md:mx-5 mx-2'>
             <div className='w-full flex gap-2 my-3' key={uniqueKey}>
                 <img src="/user_profile.jpeg" alt="User Profile" className="w-9 h-9 rounded-full" />
                 <div className="flex flex-col px-3 py-1 rounded-md bg-gray-100">
@@ -47,7 +47,7 @@ const Comment = ({ uniqueKey, comment, post }: { uniqueKey: string, comment: Com
             </div>
 
             {/* display replies here */}
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center mx:1'>
                 {
                     replies && replies.map((reply, index) => {
                         return (
@@ -77,7 +77,7 @@ const Replies = ({ uniqueKey, reply, post, comment, depth, toggleCommentReply }:
         setOpenTextInput(!openTextInput)
     }
     return (
-        <div className='w-full flex flex-col'
+        <div className='w-full flex flex-col mx-1'
             style={{ paddingLeft: `${depth * 20}px` }} // indentation
         >
             <div className='w-full flex gap-2 my-2 mx-5' key={uniqueKey}>
@@ -112,7 +112,7 @@ const Replies = ({ uniqueKey, reply, post, comment, depth, toggleCommentReply }:
             </div>
 
             {/* display replies here */}
-            <div className='w-full flex flex-col items-center'>
+            <div className='w-full flex flex-col items-center mx-1'>
                 {
                     replies && replies.map((reply, index) => {
                         return (

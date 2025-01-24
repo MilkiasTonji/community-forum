@@ -28,19 +28,20 @@ const RightSideBar = () => {
                 sortedUsers && sortedUsers.map((user, index) => {
                     return (
                         <div className="flex flex-col" key={`${index}-${user.userName}`}>
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between flex-wrap">
                                 <div className="flex items-center py-4">
                                     {/* circular icon or image */}
-                                    <img src="/user_profile.jpeg" alt="User Profile" className="w-12 h-12 rounded-full" />
+                                    <img src="/user_profile.jpeg" alt="User Profile" className="lg:w-12 lg:h-12 w-9 h-9 rounded-full" />
                                     <div className="flex flex-col px-3">
                                         <div className="flex items-center">
-                                            <h2 className="text-md font-bold text-black">{user.fullName}</h2>
-                                            <div className="pl-2 flex items-center text-gray-600">
+                                            <h2 className="lg:text-md text-sm font-bold text-black">{user.fullName}</h2>
+                                            <div className="pl-2 flex items-center text-gray-600 lg:block hidden">
                                                 <span className="px-1 text-xl">-</span>
                                                 <span>2d</span>
                                             </div>
                                         </div>
-                                        <p className="text-xs text-gray-600">New York, United States</p>
+                                        <p className="text-xs text-gray-600 lg:block hidden">New York, United States</p>
+                                        <p className="text-xs text-gray-600 lg:hidden block">New York, US</p>
                                     </div>
                                 </div>
                                 <div className="flex px-2 items-center">

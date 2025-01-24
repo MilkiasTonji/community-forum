@@ -35,7 +35,7 @@ const CommentInput: React.FC<CommentInputProps> = ({ postId, addComment }) => {
 
             <button
                 onClick={handleSubmit}
-                className="w-[10%] border-[1px] border-[#3E5AF0] hover:bg-[#324eec] hover:text-white text-black font-bold py-1.5 px-4 rounded inline-flex items-center"
+                className="md:w-[10%] border-[1px] border-[#3E5AF0] hover:bg-[#324eec] hover:text-white text-black font-bold py-1.5 px-4 rounded inline-flex items-center"
             >
                 Send
             </button>

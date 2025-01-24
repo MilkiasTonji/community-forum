@@ -25,7 +25,7 @@ function CommonLayout({children}: {children: any}) {
   };
 
   return (
-    <div className='flex flex-col md:px-36 px-0 w-full min-h-screen bg-gray-100 relative'>
+    <div className='flex flex-col lg:px-36 px-0 w-full min-h-screen bg-gray-100 relative'>
 
       <div className="w-full h-full bg-gray-100 md:px-6 px-2 py-4 flex flex-col">
         {/* Navbar Component */}
@@ -41,8 +41,8 @@ function CommonLayout({children}: {children: any}) {
         {/* Create 3 sections for left(25%), center(50%), and right(25%) sections */}
         <div className="flex items-start flex-wrap">
           {/* left section with 25% width */}
-          <div className="md:w-[25%] p-4 hidden md:block">
-            <LeftSideBar />
+          <div className="md:w-[25%] lg:p-4 p-2 hidden md:block">
+            <LeftSideBar handleOpenModal={() => {}} />
           </div>
           {/* center section with 50% width */}
           <div className="w-full md:w-[50%] p-5">
@@ -50,7 +50,7 @@ function CommonLayout({children}: {children: any}) {
           </div>
 
           {/* Right section with 25% width */}
-          <div className="md:w-[25%] p-4 hidden md:block">
+          <div className="md:w-[25%] lg:p-4 p-2 hidden md:block">
             <RightSideBar />
           </div>
         </div>
@@ -73,6 +73,7 @@ const Modal = ({ isOpen, onClose, setIsModalOpen }: { isOpen: boolean; onClose: 
   const [editorState, setEditorState] = useState<any>(EditorState.createEmpty())
   const [htmlContent, setHtmlContent] = useState<string>('');
   const [title, setTitle] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState)
@@ -82,6 +83,10 @@ const Modal = ({ isOpen, onClose, setIsModalOpen }: { isOpen: boolean; onClose: 
   }
 
   const handlePost = () => {
+    if(!user){
+      setError("You're Not logged in. Please login to create posts");
+      return;
+    }
     if (!title || !htmlContent){
         return;
     }
@@ -108,10 +113,10 @@ const Modal = ({ isOpen, onClose, setIsModalOpen }: { isOpen: boolean; onClose: 
 
   return (
     <div className="fixed w-full inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white w-[100%] max-w-2xl rounded-lg shadow-lg p-6 relative">
+      <div className="bg-white w-[90%] md:w-[100%] md:max-w-2xl max-w-xl rounded-lg shadow-lg p-6 relative">
         <IoMdClose className="w-6 h-6 text-black cursor-pointer absolute right-5 top-3" onClick={onClose} />
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Post</h2>
-
+          {error && <span className="text-red-700 text-sm">{error}</span>}
         <div className="flex flex-col gap-3">
         <div className="">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
