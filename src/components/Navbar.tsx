@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { IoMdClose } from 'react-icons/io';
-import { useAuth } from '../hooks/useAuth';
 import { GiHamburgerMenu } from "react-icons/gi";
 import LeftSideBar from './sidebars/LeftSideBar';
 import { usePosts } from '../hooks/usePosts';

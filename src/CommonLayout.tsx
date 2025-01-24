@@ -10,7 +10,6 @@ import draftToHtml from 'draftjs-to-html';
 
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Navbar from "./components/Navbar";
-import { useAuth } from "./hooks/useAuth";
 import { usePosts } from "./hooks/usePosts";
 
 function CommonLayout({children}: {children: any}) {
@@ -67,7 +66,7 @@ function CommonLayout({children}: {children: any}) {
 
 const Modal = ({ isOpen, onClose, setIsModalOpen }: { isOpen: boolean; onClose: () => void, setIsModalOpen: any }) => {
 
- const {user} = useAuth();
+ const {user} = usePosts();
  const {addPost} = usePosts();
 
   const [editorState, setEditorState] = useState<any>(EditorState.createEmpty())
