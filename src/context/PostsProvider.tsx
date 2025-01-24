@@ -6,8 +6,9 @@ import { posts as mockPosts } from '../data/mockData';
 import { getUniqueId } from '../utilities/getUniqueId';
 
 export const PostsProvider = ({ children }: { children: ReactNode }) => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]); // For Posts
 
+  const [user, setUser] = useState(null); // For user authentication
   // Initialize posts data
   useEffect(() => {
     const storedPosts = localStorage.getItem("posts");
@@ -31,6 +32,26 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
 
 
   
+    // Login Function
+    const login = (userData: any) => {
+      setUser(userData); // Update user state
+      localStorage.setItem('user', JSON.stringify(userData)); // Save user in localStorage
+  };
+
+  // Logout Function
+  const logout = () => {
+      setUser(null); // Clear user state
+      localStorage.removeItem('user'); // Remove user from localStorage
+  };
+
+  // Load User from LocalStorage
+  const loadUser = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+          setUser(JSON.parse(storedUser)); // Set user if exists
+      }
+  };
+
   const addPost = (newPost: Post) => {
     setPosts((prevPosts) => [...prevPosts, newPost]);
   };
@@ -135,7 +156,18 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
   
 
   return (
-    <PostContext.Provider value={{ posts, addPost, toggleBookmark, toggleLikePost, addComment, addReply }}>
+    <PostContext.Provider value={{ 
+      posts, 
+      addPost, 
+      toggleBookmark, 
+      toggleLikePost, 
+      addComment, 
+      addReply,
+      user,
+      login,
+      logout,
+      loadUser,
+      }}>
       {children}
     </PostContext.Provider>
   );

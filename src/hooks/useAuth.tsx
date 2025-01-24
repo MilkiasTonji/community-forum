@@ -18,6 +18,7 @@ export const useAuth = () => {
     const user: User = {fullName, userName, password}
     localStorage.setItem("loggedInUser", JSON.stringify(user));
     setUser(user);
+    navigate('/');
   };
 
   const logout = () => {

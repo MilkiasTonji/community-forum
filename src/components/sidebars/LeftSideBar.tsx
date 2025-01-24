@@ -3,12 +3,12 @@ import { linkType } from "../../types"
 import { FaHome, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { FaBookmark } from "react-icons/fa6"
 import { MdExplore } from "react-icons/md";
-import { useAuth } from "../../hooks/useAuth";
+import { usePosts } from "../../hooks/usePosts";
 
 
 
 const LeftSideBar = ({handleOpenModal}: {handleOpenModal: any}) => {
-    const { user, logout } = useAuth();
+    const { user, logout } = usePosts();
 
     const links: linkType[] = [
         {
@@ -67,7 +67,7 @@ const LeftSideBar = ({handleOpenModal}: {handleOpenModal: any}) => {
                     :
                     <button
                         onClick={handleOpenModal}
-                        className="border-[1px] border-[#3E5AF0] hover:bg-white hover:border-[#324eec] text-black hover:text-black p-2.5 rounded inline-flex items-center">
+                        className="md:hidden border-[1px] border-[#3E5AF0] hover:bg-white hover:border-[#324eec] text-black hover:text-black p-2.5 rounded inline-flex items-center">
                         <FaSignInAlt className="w-4 h-4 " />
                         <span className="font-bold px-2">Login</span>
                     </button>

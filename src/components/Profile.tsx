@@ -1,19 +1,9 @@
-import { useEffect } from "react";
 import CommonLayout from "../CommonLayout"
-import { useAuth } from "../hooks/useAuth"
+import { usePosts } from "../hooks/usePosts";
 import HorizontalDivider from "./common/HorizontalDivider";
-import { useNavigate } from "react-router";
 
 const Profile = () => {
-  const { user } = useAuth();
-  const router = useNavigate();
-
-    useEffect(()=> {
-      if(!user){
-        router("/");
-      }
-    },[])
-
+  const { user } = usePosts();
   return (
     <CommonLayout>
       {

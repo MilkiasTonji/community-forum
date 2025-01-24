@@ -1,11 +1,10 @@
 
 import CommonLayout from "../CommonLayout"
-import { useAuth } from "../hooks/useAuth";
 import { usePosts } from "../hooks/usePosts";
 import PostCard from "./PostCard";
 
 const Bookmarks = () => {
-  const { user } = useAuth();
+  const { user } = usePosts();
   const {posts} = usePosts();
 
   // Filter bookmarked posts

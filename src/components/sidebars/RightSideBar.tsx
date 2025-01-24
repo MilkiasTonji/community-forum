@@ -3,7 +3,8 @@ import HorizontalDivider from "../common/HorizontalDivider"
 import { usePosts } from "../../hooks/usePosts";
 
 const RightSideBar = () => {
-    const {posts} = usePosts();
+    const { posts } = usePosts();
+
     // Aggregate likes for each user
     const userLikes = posts.reduce((acc, post) => {
         const userName = post.user.userName;
@@ -14,11 +15,10 @@ const RightSideBar = () => {
         return acc;
     }, {} as Record<string, { fullName: string; userName: string; totalLikes: number }>);
 
-
-    // Convert aggregated data to array and sort by totalLikes
-    const sortedUsers = Object.values(userLikes).sort(
-        (a, b) => b.totalLikes - a.totalLikes
-    );
+    // Convert aggregated data to array, filter out users with 0 likes, and sort by totalLikes
+    const sortedUsers = Object.values(userLikes)
+        .filter(user => user.totalLikes > 0) // Exclude users with 0 likes
+        .sort((a, b) => b.totalLikes - a.totalLikes);
 
 
     return (

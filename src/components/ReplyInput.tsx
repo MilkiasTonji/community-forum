@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { usePosts } from "../hooks/usePosts";
 interface ReplyInputProps {
     addReply: (postId:number, commentId: number, content: string, user: any, replyId?: number) => void;
     postId: number;
@@ -12,7 +12,7 @@ interface ReplyInputProps {
 
 const ReplyInput: React.FC<ReplyInputProps> = ({ postId, commentId, addReply, replyId, type, toggleCommentReply }) => {
     const [value, setValue] = useState<string>("");
-    const {user} = useAuth();
+    const {user} = usePosts();
 
     const handleSubmit = () => {
         if(!user){

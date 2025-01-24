@@ -1,23 +1,15 @@
-import { useEffect } from "react"
 import CommonLayout from "../CommonLayout"
 import { posts } from "../data/mockData"
-import { useAuth } from "../hooks/useAuth"
+import { usePosts } from "../hooks/usePosts"
 import PostCard from "./PostCard"
-import { useNavigate } from "react-router"
 
 const MyPosts = () => {
-  const { user } = useAuth();
-  const router = useNavigate();
+  const { user } = usePosts();
   // Filter posts for the logged-in user
   const myPosts = posts.filter(
     (post) => user ? post.user.userName === user.userName : []
   );
 
-  useEffect(()=> {
-    if(!user){
-      router("/");
-    }
-  },[])
 
   return (
     <CommonLayout>

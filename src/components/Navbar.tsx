@@ -4,12 +4,13 @@ import { IoMdClose } from 'react-icons/io';
 import { useAuth } from '../hooks/useAuth';
 import { GiHamburgerMenu } from "react-icons/gi";
 import LeftSideBar from './sidebars/LeftSideBar';
+import { usePosts } from '../hooks/usePosts';
 
 
 const Navbar: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [openMobileNav, setOpenMobileNav] = useState<boolean>(false)
-    const { user } = useAuth();
+    const { user } = usePosts();
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -68,13 +69,14 @@ const Navbar: React.FC = () => {
 
 const Modal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
 
-    const { login } = useAuth();
+    const { login } = usePosts();
     const [fullName, setFullName] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const handleLogin = () => {
-        login(fullName, userName, password);
+        const userData = {fullName, userName, password}
+        login(userData);
         onClose();
     }
 
