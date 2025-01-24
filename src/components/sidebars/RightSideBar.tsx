@@ -35,7 +35,7 @@ const RightSideBar = () => {
                                     <div className="flex flex-col px-3">
                                         <div className="flex items-center">
                                             <h2 className="lg:text-md text-sm font-bold text-black">{user.fullName}</h2>
-                                            <div className="pl-2 flex items-center text-gray-600 lg:block hidden">
+                                            <div className="pl-2 md:flex items-center text-gray-600 lg:block hidden">
                                                 <span className="px-1 text-xl">-</span>
                                                 <span>2d</span>
                                             </div>

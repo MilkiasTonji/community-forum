@@ -3,6 +3,7 @@ import { Post, Reply, User } from '../types';
 import { PostContext } from './PostContext';
 
 import { posts as mockPosts } from '../data/mockData';
+import { getUniqueId } from '../utilities/getUniqueId';
 
 export const PostsProvider = ({ children }: { children: ReactNode }) => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -62,7 +63,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
               ...post,
               comments: [
                 ...post.comments,
-                { id: Math.floor(100000 + Math.random() * 900000), content: commentText, user: {fullName: user.fullName, userName: user.userName}, replies: []},
+                { id: getUniqueId(), content: commentText, user: {fullName: user.fullName, userName: user.userName}, replies: []},
               ],
             }
           : post
@@ -90,7 +91,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
                       replies: [
                         ...(reply.replies || []),
                         {
-                          id: Math.floor(100000 + Math.random() * 900000),
+                          id: getUniqueId(),
                           content: replyText,
                           user,
                           replies: [],
@@ -111,7 +112,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
                   : [
                       ...(comment.replies || []),
                       {
-                        id: Math.floor(100000 + Math.random() * 900000),
+                        id: getUniqueId(),
                         content: replyText,
                         user,
                         replies: [],

@@ -45,7 +45,7 @@ function CommonLayout({children}: {children: any}) {
             <LeftSideBar handleOpenModal={() => {}} />
           </div>
           {/* center section with 50% width */}
-          <div className="w-full md:w-[50%] p-5">
+          <div className="w-full md:w-[50%] md:p-5 p-2">
             {children}
           </div>
 
