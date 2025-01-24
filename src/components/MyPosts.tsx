@@ -1,10 +1,9 @@
 import CommonLayout from "../CommonLayout"
-import { posts } from "../data/mockData"
 import { usePosts } from "../hooks/usePosts"
 import PostCard from "./PostCard"
 
 const MyPosts = () => {
-  const { user } = usePosts();
+  const { user, posts } = usePosts();
   // Filter posts for the logged-in user
   const myPosts = posts.filter(
     (post) => user ? post.user.userName === user.userName : []

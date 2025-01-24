@@ -1,4 +1,5 @@
-# React + TypeScript + Vite
+## Community Forum 
+- Level up your discussions
 ## How to run app locally:
 - clone the git repository
 - run `npm install` to install dependencies or packages
@@ -23,3 +24,4 @@
 - React Router: for routing
 - Local Storage: For data persistence
 - Vite: for fater builds
+
