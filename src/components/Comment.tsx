@@ -100,8 +100,8 @@ const Replies = ({
         <div className={`w-full flex flex-col mx-1`} style={getPadding(depth, isMobile)}>
             <div className='w-full flex gap-2 my-2 px-5' key={uniqueKey}>
             <div className='flex items-center justify-center bg-gray-100 w-10 h-10 rounded-full font-bold'>{user && user.fullName[0].toUpperCase()}</div>
-                <img src="/user_profile.jpeg" alt="User Profile" className="md:w-7 md:h-7 rounded-full md:block hidden" />
-                <div className="flex flex-col px-3 py-1 rounded-md bg-gray-100 w-[90%]">
+                {/* <img src="/user_profile.jpeg" alt="User Profile" className="md:w-7 md:h-7 rounded-full md:block hidden" /> */}
+                <div className="flex flex-col px-3 py-1 rounded-md bg-gray-100 w-[90%] md:mx-5">
                     <div className="flex items-center">
                         <h2 className="text-md font-bold text-black">{user.fullName}</h2>
                         <div className="pl-2 flex items-center text-gray-600">
