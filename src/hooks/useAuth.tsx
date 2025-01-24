@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { User } from "../types";
+import { useNavigate } from "react-router";
 
 export const useAuth = () => {
   const [user, setUser] = useState<User|null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("loggedInUser");
@@ -21,6 +23,7 @@ export const useAuth = () => {
   const logout = () => {
     localStorage.removeItem("loggedInUser");
     setUser(null);
+    navigate('/');
   };
 
   const signup = (fullName: string, userName: string, password: string) => {
